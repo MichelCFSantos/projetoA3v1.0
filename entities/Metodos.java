@@ -1,12 +1,14 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Metodos {
     Scanner sc = new Scanner(System.in);
@@ -26,12 +28,22 @@ public class Metodos {
         String telefone = sc.nextLine();
         System.out.println("Escolha um Email: ");
         String email = sc.nextLine();
-        System.out.println("Informe a sua data de nascimento: (ddMMyyyy)");
-        String dataNascimentoRaw = sc.nextLine();
+        String dataNascimento;
+        DateTimeFormatter entradaFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        DateTimeFormatter saidaFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        String dataNascimento = dataNascimentoRaw.substring(0, 2) + "/"
-                + dataNascimentoRaw.substring(2, 4) + "/"
-                + dataNascimentoRaw.substring(4, 8);
+        try {
+            System.out.println("Informe a sua data de nascimento: (ddMMyyyy)");
+
+            String dataNascimentoRaw = sc.nextLine();
+
+            LocalDate data = LocalDate.parse(dataNascimentoRaw, entradaFormatter);
+            dataNascimento = data.format(saidaFormatter);
+
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato inválido ou data inexistente. Exemplo correto: 05102000");
+            return;
+        }
         Contato contato = new Contato(nome, telefone, email, dataNascimento);
         contatos.add(contato);
         System.out.println();
@@ -46,7 +58,7 @@ public class Metodos {
     public void editContato() {
 
         System.out.println("O que você deseja editar?");
-        System.out.println("Opções: Nome, Telefone, Email ou Data de Nascimento");
+        System.out.println("Opções: Nome, Telefone, Email ou Data de nascimento");
         String case2 = sc.nextLine();
         case2 = case2.substring(0, 1).toUpperCase() + case2.substring(1).toLowerCase();
         switch (case2) {
@@ -111,7 +123,7 @@ public class Metodos {
                 }
                 break;
 
-            case "Data de Nascimento":
+            case "Data de nascimento":
                 System.out.println("Escreva a data de nascimento do contato que deseja editar: ");
                 String d = sc.nextLine();
                 for (Contato c : contatos) {
