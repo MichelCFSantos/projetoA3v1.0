@@ -48,7 +48,7 @@ public class Contato {
     }
 
     public String toString() {
-        return ("Nome : " + nome + " /Telefone : " + telefone + " /Email: " + email + " /Data de Nascimento : "
+        return ("Nome: " + nome + " / Telefone: " + telefone + " / Email: " + email + " / Data de nascimento: "
                 + dataNascimento);
 
     }
