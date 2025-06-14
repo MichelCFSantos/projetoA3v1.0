@@ -13,9 +13,10 @@ import java.util.Scanner;
 public class Metodos {
     private final String FILE_NAME = "contatos.json";
     Scanner sc = new Scanner(System.in);
-    private ArrayList<Contato> contatos;
+    private final ArrayList<Contato> contatos;
     DateTimeFormatter entradaFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
     DateTimeFormatter saidaFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    boolean encontrado;
 
 
     public Metodos() {
@@ -69,7 +70,7 @@ public class Metodos {
                     String n = sc.nextLine();
                     n = n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase();
 
-                    boolean encontrado = false;
+                    encontrado = false;
 
                     for (Contato c : contatos) {
                         if (c.getNome().equalsIgnoreCase(n)) {
@@ -140,6 +141,10 @@ public class Metodos {
                                 LocalDate data = LocalDate.parse(novaData, entradaFormatter);
                                 novaData = data.format(saidaFormatter);
                                 c.setDataNascimento(novaData);
+                                System.out.println("Contato editado com sucesso: " + c);
+                                encontrado = true;
+
+
 
                             }
                         }
